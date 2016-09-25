@@ -102,14 +102,27 @@ Leap.loop(controllerOptions, function(frame) {
       var tap = false;
       for(var i = 0; i < frame.gestures.length; i++){
         var gesture = frame.gestures[i];
-        if(gesture.type ==="screenTap"){
+        var translation = frame.translation(previousFrame);
+        if(gesture.type ==="screenTap" && Math.abs(translation[0]) < 6){
+          console.log(Math.abs(translation[0]));
           tap = true;
         }
       }
 
-      paused = true;
-      console.log("User tapped");
-      pauseTracker();
+      paused = tap;
+
+      if(tap){
+        console.log("User tapped");
+
+        console.log(vectorToString(translation));
+
+        if(state === "tsection"){
+          $('#tutorial').fadeOut("slow");
+          $('#videoList').fadeIn("slow");
+
+        }
+        pauseTracker();
+      }
       return tap;
     }else{
       return false;
@@ -171,7 +184,7 @@ function closedPalm(){
 
     swipeRight("tsection");
     swipeLeft("tsection");
-    // screenTap();
+    screenTap("tsection");
   }
   // Display Frame object data
  //  var frameOutput = document.getElementById("frameData");
