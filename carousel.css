@@ -4,7 +4,11 @@
 
 body {
   padding-bottom: 0px;
+<<<<<<< HEAD
   /*color: #D3D3D3;*/
+=======
+  color: #D3D3D3;
+>>>>>>> prod
 }
 
 
@@ -43,7 +47,11 @@ body {
 
 /* Carousel base class */
 .carousel {
+<<<<<<< HEAD
   height: 800px;
+=======
+  height: 1000px;
+>>>>>>> prod
   margin-bottom: 0px;
   color: #D3D3D3;
 }
@@ -54,7 +62,11 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
+<<<<<<< HEAD
   height: 800px;
+=======
+  height: 1000px;
+>>>>>>> prod
   background-color: #D3D3D3;
 }
 .carousel-inner > .item > img {
