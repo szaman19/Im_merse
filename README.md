@@ -1,2 +1,1 @@
-# Im_merse
-Immersive video player with leap motion. 
+An immersive video player using leap motion 
