@@ -46,6 +46,7 @@ Leap.loop(controllerOptions, function(frame) {
           swipeRightCounter = 0;
           if(state === "tsection"){
               console.log("User Swiped Right on tutorial");
+              $('#myCarousel').carousel("next");
           }
 
           paused = true;
@@ -79,6 +80,8 @@ Leap.loop(controllerOptions, function(frame) {
 
             if(state === "tsection"){
                 console.log("User Swiped Left on tutorial");
+
+                $('#myCarousel').carousel("prev");
             }
 
             pauseTracker();
@@ -103,6 +106,7 @@ Leap.loop(controllerOptions, function(frame) {
           tap = true;
         }
       }
+
       paused = true;
       console.log("User tapped");
       pauseTracker();
