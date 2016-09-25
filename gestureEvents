@@ -1,0 +1,37 @@
+case 'screenTap':
+          if (video.paused())
+          {
+          video.play();
+          sleepAfterValidGesture('Play');
+          } else {
+            video.pause();
+            sleepAfterValidGesture('Pause');
+          }
+          break;
+}
+case 'volumeUp':
+          if (volume!=1())
+          {
+          volume+=.1
+          } else {
+          }
+          break;
+}
+case 'volumeDown':
+          if (volume!=0())
+          {
+          volume-=.1
+          } else {
+          }
+          break;
+}
+case 'fastForward':
+          if (timeRemaining!=0())
+          {
+          time+=5
+          }
+          else{
+
+          }
+          break;
+}
