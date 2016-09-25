@@ -6,6 +6,7 @@ var pauseOnGesture = false;
 var tutorialSection = true;
 var movieList = false;
 var movieMode = false;
+
 // Setup Leap loop with frame callback function
 var controllerOptions = {enableGestures: true};
 
@@ -82,9 +83,11 @@ Leap.loop(controllerOptions, function(frame) {
                 console.log("User Swiped Left on tutorial");
 
                 $('#myCarousel').carousel("prev");
+
+                pauseTracker();
             }
 
-            pauseTracker();
+            // pauseTracker();
             return true;
 
           }else{
@@ -120,8 +123,26 @@ Leap.loop(controllerOptions, function(frame) {
           $('#tutorial').fadeOut("slow");
           $('#videoList').fadeIn("slow");
 
-        }
+          tutorialSection = false;
+          movieList = true;
+
+          pauseTracker();
+
+        }else if (state ==="mlist") {
+          $('#videoList').fadeOut("slow");
+          $('#mediaPlayer').fadeIn("slow");
+          movieList = false;
+          movieMode = true;
+
+          pauseTracker();
+        }else{
+
+
+  // EXAMPLE: Start playing the video
         pauseTracker();
+
+        // });
+        }
       }
       return tap;
     }else{
@@ -158,6 +179,7 @@ function closedPalm(){
         var hand = frame.hands[i];
 
         if(hand.grabStrength > .8){
+
           returnVar = true;
         }
       }
@@ -167,24 +189,22 @@ function closedPalm(){
 }
   //Instructions for when the tutorial is going on
   if(tutorialSection){
-
-
-    // var swipedRight = swipeRight();
-    // var swipedLeft = swipeLeft();
-    // var screenTapped = screenTap();
-    //
-    // if(swipedRight){
-    //   console.log("user swiped right");
-    //   swipedRight = false;
-    // }else if (swipedLeft) {
-    //   console.log("user swiped left");
-    //   swipedLeft = false;
-    // }
-
-
     swipeRight("tsection");
     swipeLeft("tsection");
     screenTap("tsection");
+  }else if (movieList) {
+    swipeRight("mlist");
+    swipeLeft("mlist");
+
+    screenTap("mlist");
+  } else if (movieMode) {
+
+    swipeRight('player');
+    swipeLeft('player');
+    screenTap('player');
+    openPalm('player');
+    closedPalm('player');
+
   }
   // Display Frame object data
  //  var frameOutput = document.getElementById("frameData");
