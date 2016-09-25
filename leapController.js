@@ -3,6 +3,9 @@ var previousFrame = null;
 var paused = false;
 var pauseOnGesture = false;
 
+var tutorialSection = true;
+var movieList = false;
+var movieMode = false;
 // Setup Leap loop with frame callback function
 var controllerOptions = {enableGestures: true};
 
@@ -14,6 +17,74 @@ Leap.loop(controllerOptions, function(frame) {
     return; // Skip this update
   }
 
+  var swipeRightCounter = 0;
+  var swipeLeftCounter = 0;
+//Stop Tracking
+function pauseTracker(){
+  setTimeout(function(){
+    console.log("valid input detected");
+  },500);
+}
+
+//Swipe right function
+  function swipeRight(){
+    if(frame.gestures.length > 0){
+      for (var i = 0; i < frame.gestures.length; i++) {
+          var gesture = frame.gestures[i];
+          if(gesture.type === "swipe"){
+            // console.log(vectorToString(gesture.direction,1));
+            // console.log(gesture.direction[0]);
+            if(gesture.direction[0] < -.7 && gesture.duration > 500) {
+              swipeRightCounter = swipeRightCounter + 1;
+            }
+          }
+        }
+        if(swipeRightCounter > 6){
+          swipeRightCounter = 0;
+          console.log("User Swiped Right");
+          pauseTracker();
+          return true;
+        }else{
+          return false;
+        }
+    } else{
+      return false;
+    }
+  }
+
+  //Swipe left function
+    function swipeLeft(){
+      if(frame.gestures.length > 0){
+
+        for (var i = 0; i < frame.gestures.length; i++) {
+            var gesture = frame.gestures[i];
+            if(gesture.type === "swipe"){
+              // console.log(vectorToString(gesture.direction,1));
+              // console.log(gesture.direction[0]);
+              if(gesture.direction[0] > -.7 && gesture.duration > 500) {
+                swipeLeftCounter = swipeLeftCounter + 1;
+              }
+            }
+          }
+          if(swipeLeftCounter > 6){
+            swipeLeftCounter = 0;
+            console.log("User Swiped Left");
+            pauseTracker();
+            return true;
+
+          }else{
+            return false;
+          }
+      }else{
+        return false;
+      }
+    }
+
+  //Instructions for when the tutorial is going on
+  if(tutorialSection){
+    swipeRight();
+    swipeLeft();
+  }
   // Display Frame object data
  //  var frameOutput = document.getElementById("frameData");
  //
@@ -43,8 +114,6 @@ Leap.loop(controllerOptions, function(frame) {
  // } catch (e) {
  //   console.log(e);
  // }
-
-
 
 
   // Display Hand object data
@@ -106,6 +175,8 @@ Leap.loop(controllerOptions, function(frame) {
   // Display Pointable (finger and tool) object data
   var pointableOutput = document.getElementById("pointableData");
   var pointableString = "";
+
+  var fingerExtended = false;
   if (frame.pointables.length > 0) {
     var fingerTypeMap = ["Thumb", "Index finger", "Middle finger", "Ring finger", "Pinky finger"];
     var boneTypeMap = ["Metacarpal", "Proximal phalanx", "Intermediate phalanx", "Distal phalanx"];
@@ -124,22 +195,29 @@ Leap.loop(controllerOptions, function(frame) {
         pointableString += "</div>";
       }
       else {
-        pointableString += "Pointable ID: " + pointable.id + "<br />";
-        pointableString += "Type: " + fingerTypeMap[pointable.type] + "<br />";
-        pointableString += "Belongs to hand with ID: " + pointable.handId + "<br />";
-        pointableString += "Classified as a finger<br />";
-        pointableString += "Length: " + pointable.length.toFixed(1) + " mm<br />";
-        pointableString += "Width: "  + pointable.width.toFixed(1) + " mm<br />";
-        pointableString += "Direction: " + vectorToString(pointable.direction, 2) + "<br />";
-        pointableString += "Extended?: "  + pointable.extended + "<br />";
-        pointable.bones.forEach( function(bone){
-          pointableString += boneTypeMap[bone.type] + " bone <br />";
-          pointableString += "Center: " + vectorToString(bone.center()) + "<br />";
-          pointableString += "Direction: " + vectorToString(bone.direction()) + "<br />";
-          pointableString += "Up vector: " + vectorToString(bone.basis[1]) + "<br />";
-        });
-        pointableString += "Tip position: " + vectorToString(pointable.tipPosition) + " mm<br />";
-        pointableString += "</div>";
+        if (pointable.extended) {
+          fingerExtended = true;
+          pointableString += "Type: " + fingerTypeMap[pointable.type] + "<br />";
+          // pointableString += "Belongs to hand with ID: " + pointable.handId + "<br />";
+          // pointableString += "Classified as a finger<br />";
+          // pointableString += "Length: " + pointable.length.toFixed(1) + " mm<br />";
+          // pointableString += "Width: "  + pointable.width.toFixed(1) + " mm<br />";
+          pointableString += "Direction: " + vectorToString(pointable.direction, 2) + "<br />";
+          pointableString += "Extended?: "  + pointable.extended + "<br />";
+          // pointable.bones.forEach( function(bone){
+          //   pointableString += boneTypeMap[bone.type] + " bone <br />";
+          //   pointableString += "Center: " + vectorToString(bone.center()) + "<br />";
+          //   pointableString += "Direction: " + vectorToString(bone.direction()) + "<br />";
+          //   pointableString += "Up vector: " + vectorToString(bone.basis[1]) + "<br />";
+          // });
+          pointableString += "Tip position: " + vectorToString(pointable.tipPosition) + " mm<br />";
+          pointableString += "</div>";
+
+        }
+
+
+        // pointableString += "Pointable ID: " + pointable.id + "<br />";
+
       }
     }
   }
