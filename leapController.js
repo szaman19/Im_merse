@@ -164,9 +164,15 @@ function openPalm(state){
         var hand = frame.hands[i];
 
         if(hand.grabStrength < .2){
-          videoPlayer.volume(0);
-          pauseTracker();
           returnVar = true;
+          if(state==="player"){
+            var isPaused = videoPlayer.paused();
+            if(isPaused){
+              videoPlayer.play();
+              pauseTracker();
+
+            }
+          }
         }
       }
     }
@@ -188,14 +194,11 @@ function closedPalm(state){
           returnVar = true;
           if(state==="player"){
             var isPaused = videoPlayer.paused();
-            if(isPaused){
-                videoPlayer.play();
-                pauseTracker();
-            }else{
-                videoPlayer.pause();
-                pauseTracker();
-            }
+            if(!isPaused){
+              videoPlayer.pause();
+              pauseTracker();
 
+            }
           }
         }
       }
@@ -216,7 +219,7 @@ function clockwiseGesture(state){
         console.log(gesture.normal[2]);
         console.log(gesture.progress.toFixed(2));
 
-        if(gesture.normal[2] < 0  && gesture.progress.toFixed(2) > 12 ){
+        if(gesture.normal[2] < 0  && gesture.progress.toFixed(2) > 5 ){
             var howLoudIsIt = videoPlayer.volume();
             videoPlayer.volume(howLoudIsIt + .1);
 
@@ -239,14 +242,39 @@ function counterClockwiseGesture(state){
         console.log(gesture.normal[2]);
         console.log(gesture.progress.toFixed(2));
 
-        if(gesture.normal[2] > 0  && gesture.progress.toFixed(2) > 13 ){
-            var howLoudIsIt = myPlayer.volume();
-            myPlayer.volume(howLoudIsIt - .1);
+        if(gesture.normal[2] > 0  && gesture.progress.toFixed(2) > 5 ){
+            var howLoudIsIt = videoPlayer.volume();
+            videoPlayer.volume(howLoudIsIt - .1);
             pauseTracker();
         }
       }
     }
   }
+}
+
+function closedPinch(state){
+  var returnVar = false;
+  if(frame.gestures.length ==0){
+    if (frame.hands.length > 0) {
+      for (var i = 0; i < frame.hands.length; i++) {
+        var hand = frame.hands[i];
+
+        if(hand.pinchStrength > .8){
+
+          returnVar = true;
+          if(state==="player"){
+            var isPaused = videoPlayer.muted();
+            if(isPaused){
+                videoPlayer.volume(0);
+                pauseTracker();
+            }
+          }
+        }
+      }
+    }
+  }
+  return returnVar;
+
 }
   //Instructions for when the tutorial is going on
   if(tutorialSection){
@@ -266,6 +294,7 @@ function counterClockwiseGesture(state){
     openPalm('player');
     closedPalm('player');
     clockwiseGesture('player');
+    counterClockwiseGesture('player');
 
   }
   // Display Frame object data
