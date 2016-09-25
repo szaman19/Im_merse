@@ -7,6 +7,8 @@ var tutorialSection = true;
 var movieList = false;
 var movieMode = false;
 
+var videoPlayer = videojs("example_video_1");
+
 // Setup Leap loop with frame callback function
 var controllerOptions = {enableGestures: true};
 
@@ -106,7 +108,7 @@ Leap.loop(controllerOptions, function(frame) {
       for(var i = 0; i < frame.gestures.length; i++){
         var gesture = frame.gestures[i];
         var translation = frame.translation(previousFrame);
-        if(gesture.type ==="screenTap" && Math.abs(translation[0]) < 6){
+        if(gesture.type ==="screenTap" && Math.abs(translation[0]) < 3){
           console.log(Math.abs(translation[0]));
           tap = true;
         }
@@ -137,9 +139,10 @@ Leap.loop(controllerOptions, function(frame) {
           pauseTracker();
         }else{
 
-
   // EXAMPLE: Start playing the video
+        videoPlayer.play();
         pauseTracker();
+
 
         // });
         }
@@ -153,7 +156,7 @@ Leap.loop(controllerOptions, function(frame) {
 
 // Open Palm Function
 
-function openPalm(){
+function openPalm(state){
   var returnVar = false;
   if(frame.gestures.length ==0){
     if (frame.hands.length > 0) {
@@ -161,6 +164,8 @@ function openPalm(){
         var hand = frame.hands[i];
 
         if(hand.grabStrength < .2){
+          videoPlayer.volume(0);
+          pauseTracker();
           returnVar = true;
         }
       }
@@ -171,7 +176,7 @@ function openPalm(){
 
 // Closed Palm Function
 
-function closedPalm(){
+function closedPalm(state){
   var returnVar = false;
   if(frame.gestures.length ==0){
     if (frame.hands.length > 0) {
@@ -181,11 +186,67 @@ function closedPalm(){
         if(hand.grabStrength > .8){
 
           returnVar = true;
+          if(state==="player"){
+            var isPaused = videoPlayer.paused();
+            if(isPaused){
+                videoPlayer.play();
+                pauseTracker();
+            }else{
+                videoPlayer.pause();
+                pauseTracker();
+            }
+
+          }
         }
       }
     }
   }
   return returnVar;
+}
+
+//Clockwise Circle Gesture
+function clockwiseGesture(state){
+  if(frame.gestures.length > 0){
+
+    for(var i = 0; i < frame.hands.length; i++){
+
+      var gesture = frame.gestures[i];
+      if(gesture.type === "circle" ){
+        // console.log(vectorToString(gesture.normal, 2));
+        console.log(gesture.normal[2]);
+        console.log(gesture.progress.toFixed(2));
+
+        if(gesture.normal[2] < 0  && gesture.progress.toFixed(2) > 12 ){
+            var howLoudIsIt = videoPlayer.volume();
+            videoPlayer.volume(howLoudIsIt + .1);
+
+            pauseTracker();
+        }
+      }
+    }
+  }
+}
+
+//Counter-Clockwise Circle Gesture
+function counterClockwiseGesture(state){
+  if(frame.gestures.length > 0){
+
+    for(var i = 0; i < frame.hands.length; i++){
+
+      var gesture = frame.gestures[i];
+      if(gesture.type === "circle" ){
+        // console.log(vectorToString(gesture.normal, 2));
+        console.log(gesture.normal[2]);
+        console.log(gesture.progress.toFixed(2));
+
+        if(gesture.normal[2] > 0  && gesture.progress.toFixed(2) > 13 ){
+            var howLoudIsIt = myPlayer.volume();
+            myPlayer.volume(howLoudIsIt - .1);
+            pauseTracker();
+        }
+      }
+    }
+  }
 }
   //Instructions for when the tutorial is going on
   if(tutorialSection){
@@ -204,6 +265,7 @@ function closedPalm(){
     screenTap('player');
     openPalm('player');
     closedPalm('player');
+    clockwiseGesture('player');
 
   }
   // Display Frame object data
