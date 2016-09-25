@@ -142,11 +142,12 @@
 
   </section>
 
-  <section id = "videoList">
+  <section id = "videoList" style="display:none;">
 
   </section>
 
 
+<<<<<<< HEAD
   <section id = "mediaPlayer">
     <video id="example_video_1" class="video-js vjs-default-skin"
       controls preload="auto" width="640" height="264"
@@ -154,6 +155,20 @@
       data-setup='{"example_option":true}'>
       <video autoplay loop>
      <source src="http://video-js.zencoder.com/oceans-clip.mp4" width="1024" height="552" type="video/mp4" />
+=======
+  <section id = "mediaPlayer" style="display:none;">
+    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
+      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+        <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+          <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg">
+            <track kind="captions" src="../shared/example-captions.vtt" srclang="en" label="English"></track>
+    <!-- Tracks need an ending tag thanks to IE9 -->
+    <track kind="subtitles" src="../shared/example-captions.vtt" srclang="en" label="English"></track>
+    <!-- Tracks need an ending tag thanks to IE9 -->
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+</video>
+
+>>>>>>> ccd8c34546d9214e41e2808a18cb6b4904422349
   </section>
 
 
@@ -187,7 +202,14 @@
     <!-- Insert this line after script imports -->
 
     <script>if (window.module) module = window.module;</script>
+    <script>
+
+    </script>
     <script src="leapController.js"></script>
+
+    <!-- <script>
+      var videoPlayer = videojs("example_video_1");
+    </script> -->
 
   </body>
 </html>
