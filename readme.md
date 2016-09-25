@@ -1,1 +1,2 @@
-Immersive video player using leap motion
+# Im_merse
+Immersive video player with leap motion. 
