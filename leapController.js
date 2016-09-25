@@ -15,7 +15,7 @@ var controllerOptions = {enableGestures: true};
 //Stop Tracking
 function pauseTracker(){
   setTimeout(function(){
-    console.log("valid input detected");
+    //  console.log("valid input detected") ;
     paused = false;
   },500);
 }
@@ -30,7 +30,7 @@ Leap.loop(controllerOptions, function(frame) {
 
 
 //Swipe right function
-  function swipeRight(){
+  function swipeRight(state){
     if(frame.gestures.length > 0){
       for (var i = 0; i < frame.gestures.length; i++) {
           var gesture = frame.gestures[i];
@@ -44,7 +44,10 @@ Leap.loop(controllerOptions, function(frame) {
         }
         if(swipeRightCounter > 6){
           swipeRightCounter = 0;
-          console.log("User Swiped Right");
+          if(state === "tsection"){
+              console.log("User Swiped Right on tutorial");
+          }
+
           paused = true;
           pauseTracker();
           return true;
@@ -57,7 +60,7 @@ Leap.loop(controllerOptions, function(frame) {
   }
 
   //Swipe left function
-    function swipeLeft(){
+    function swipeLeft(state){
       if(frame.gestures.length > 0){
 
         for (var i = 0; i < frame.gestures.length; i++) {
@@ -73,7 +76,11 @@ Leap.loop(controllerOptions, function(frame) {
           if(swipeLeftCounter > 6){
             swipeLeftCounter = 0;
             paused = true;
-            console.log("User Swiped Left");
+
+            if(state === "tsection"){
+                console.log("User Swiped Left on tutorial");
+            }
+
             pauseTracker();
             return true;
 
@@ -87,7 +94,7 @@ Leap.loop(controllerOptions, function(frame) {
 
   //Screen Tap Fuction
 
-  function screenTap(){
+  function screenTap(state){
     if(frame.gestures.length > 0){
       var tap = false;
       for(var i = 0; i < frame.gestures.length; i++){
@@ -106,11 +113,61 @@ Leap.loop(controllerOptions, function(frame) {
 
   }
 
+// Open Palm Function
+
+function openPalm(){
+  var returnVar = false;
+  if(frame.gestures.length ==0){
+    if (frame.hands.length > 0) {
+      for (var i = 0; i < frame.hands.length; i++) {
+        var hand = frame.hands[i];
+
+        if(hand.grabStrength < .2){
+          returnVar = true;
+        }
+      }
+    }
+  }
+  return returnVar;
+}
+
+// Closed Palm Function
+
+function closedPalm(){
+  var returnVar = false;
+  if(frame.gestures.length ==0){
+    if (frame.hands.length > 0) {
+      for (var i = 0; i < frame.hands.length; i++) {
+        var hand = frame.hands[i];
+
+        if(hand.grabStrength > .8){
+          returnVar = true;
+        }
+      }
+    }
+  }
+  return returnVar;
+}
   //Instructions for when the tutorial is going on
   if(tutorialSection){
-    swipeRight();
-    swipeLeft();
-    screenTap();
+
+
+    // var swipedRight = swipeRight();
+    // var swipedLeft = swipeLeft();
+    // var screenTapped = screenTap();
+    //
+    // if(swipedRight){
+    //   console.log("user swiped right");
+    //   swipedRight = false;
+    // }else if (swipedLeft) {
+    //   console.log("user swiped left");
+    //   swipedLeft = false;
+    // }
+
+
+    swipeRight("tsection");
+    swipeLeft("tsection");
+    // screenTap();
   }
   // Display Frame object data
  //  var frameOutput = document.getElementById("frameData");
@@ -200,59 +257,7 @@ Leap.loop(controllerOptions, function(frame) {
   //
   //
   // Display Pointable (finger and tool) object data
-  var pointableOutput = document.getElementById("pointableData");
-  var pointableString = "";
-
-  var fingerExtended = false;
-  if (frame.pointables.length > 0) {
-    var fingerTypeMap = ["Thumb", "Index finger", "Middle finger", "Ring finger", "Pinky finger"];
-    var boneTypeMap = ["Metacarpal", "Proximal phalanx", "Intermediate phalanx", "Distal phalanx"];
-    for (var i = 0; i < frame.pointables.length; i++) {
-      var pointable = frame.pointables[i];
-
-      pointableString += "<div style='width:250px; float:left; padding:5px'>";
-
-      if (pointable.tool) {
-        pointableString += "Pointable ID: " + pointable.id + "<br />";
-        pointableString += "Classified as a tool <br />";
-        pointableString += "Length: " + pointable.length.toFixed(1) + " mm<br />";
-        pointableString += "Width: "  + pointable.width.toFixed(1) + " mm<br />";
-        pointableString += "Direction: " + vectorToString(pointable.direction, 2) + "<br />";
-        pointableString += "Tip position: " + vectorToString(pointable.tipPosition) + " mm<br />"
-        pointableString += "</div>";
-      }
-      else {
-        if (pointable.extended) {
-          fingerExtended = true;
-          pointableString += "Type: " + fingerTypeMap[pointable.type] + "<br />";
-          // pointableString += "Belongs to hand with ID: " + pointable.handId + "<br />";
-          // pointableString += "Classified as a finger<br />";
-          // pointableString += "Length: " + pointable.length.toFixed(1) + " mm<br />";
-          // pointableString += "Width: "  + pointable.width.toFixed(1) + " mm<br />";
-          pointableString += "Direction: " + vectorToString(pointable.direction, 2) + "<br />";
-          pointableString += "Extended?: "  + pointable.extended + "<br />";
-          // pointable.bones.forEach( function(bone){
-          //   pointableString += boneTypeMap[bone.type] + " bone <br />";
-          //   pointableString += "Center: " + vectorToString(bone.center()) + "<br />";
-          //   pointableString += "Direction: " + vectorToString(bone.direction()) + "<br />";
-          //   pointableString += "Up vector: " + vectorToString(bone.basis[1]) + "<br />";
-          // });
-          pointableString += "Tip position: " + vectorToString(pointable.tipPosition) + " mm<br />";
-          pointableString += "</div>";
-
-        }
-
-
-        // pointableString += "Pointable ID: " + pointable.id + "<br />";
-
-      }
-    }
-  }
-  else {
-    pointableString += "<div>No pointables</div>";
-  }
-
-      pointableOutput.innerHTML = pointableString;
+  //  /
 
 
 
@@ -302,23 +307,23 @@ Leap.loop(controllerOptions, function(frame) {
 
       // gestureOutput.innerHTML = gestureString;
 
-var counter = 0;
-var gestureOutput = document.getElementById("gestureData");
-
-var gestureString = "";
-
-  if(frame.gestures.length > 0){
-    frame.gestures.forEach(function(gesture){
-              if(gesture.type === "circle"){
-                gestureString = "Circle Gesture detected";
-                var li = document.createElement("li");
-                li.appendChild(document.createTextNode(gestureString));
-                gestureOutput.appendChild(li);
-              }
-    });
-  } else{
-    gestureString = "No Gesture Detected";
-  }
+// var counter = 0;
+// var gestureOutput = document.getElementById("gestureData");
+//
+// var gestureString = "";
+//
+//   if(frame.gestures.length > 0){
+//     frame.gestures.forEach(function(gesture){
+//               if(gesture.type === "circle"){
+//                 gestureString = "Circle Gesture detected";
+//                 var li = document.createElement("li");
+//                 li.appendChild(document.createTextNode(gestureString));
+//                 gestureOutput.appendChild(li);
+//               }
+//     });
+//   } else{
+//     gestureString = "No Gesture Detected";
+  // }
 
 //           switch (gesture.type){
 //             case "circle":
