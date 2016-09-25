@@ -50,6 +50,10 @@ Leap.loop(controllerOptions, function(frame) {
           if(state === "tsection"){
               console.log("User Swiped Right on tutorial");
               $('#myCarousel').carousel("next");
+              pauseTracker();
+          }else if(state ==="mlist"){
+            $('#videoless-carousel').carousel("next");
+            pauseTracker();
           }
 
           paused = true;
@@ -87,6 +91,9 @@ Leap.loop(controllerOptions, function(frame) {
                 $('#myCarousel').carousel("prev");
 
                 pauseTracker();
+            }else if (state ==="mlist") {
+              $('#videoless-carousel').carousel("prev");
+              pauseTracker();
             }
 
             // pauseTracker();
