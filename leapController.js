@@ -12,6 +12,14 @@ var controllerOptions = {enableGestures: true};
 // to use HMD mode:
 // controllerOptions.optimizeHMD = true;
 
+//Stop Tracking
+function pauseTracker(){
+  setTimeout(function(){
+    console.log("valid input detected");
+    paused = false;
+  },500);
+}
+
 Leap.loop(controllerOptions, function(frame) {
   if (paused) {
     return; // Skip this update
@@ -19,12 +27,7 @@ Leap.loop(controllerOptions, function(frame) {
 
   var swipeRightCounter = 0;
   var swipeLeftCounter = 0;
-//Stop Tracking
-function pauseTracker(){
-  setTimeout(function(){
-    console.log("valid input detected");
-  },500);
-}
+
 
 //Swipe right function
   function swipeRight(){
@@ -42,6 +45,7 @@ function pauseTracker(){
         if(swipeRightCounter > 6){
           swipeRightCounter = 0;
           console.log("User Swiped Right");
+          paused = true;
           pauseTracker();
           return true;
         }else{
@@ -68,6 +72,7 @@ function pauseTracker(){
           }
           if(swipeLeftCounter > 6){
             swipeLeftCounter = 0;
+            paused = true;
             console.log("User Swiped Left");
             pauseTracker();
             return true;
@@ -80,10 +85,32 @@ function pauseTracker(){
       }
     }
 
+  //Screen Tap Fuction
+
+  function screenTap(){
+    if(frame.gestures.length > 0){
+      var tap = false;
+      for(var i = 0; i < frame.gestures.length; i++){
+        var gesture = frame.gestures[i];
+        if(gesture.type ==="screenTap"){
+          tap = true;
+        }
+      }
+      paused = true;
+      console.log("User tapped");
+      pauseTracker();
+      return tap;
+    }else{
+      return false;
+    }
+
+  }
+
   //Instructions for when the tutorial is going on
   if(tutorialSection){
     swipeRight();
     swipeLeft();
+    screenTap();
   }
   // Display Frame object data
  //  var frameOutput = document.getElementById("frameData");
