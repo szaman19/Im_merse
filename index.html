@@ -111,16 +111,73 @@
         <span class="sr-only">Next</span>
       </a>
     </div><!-- /.carousel -->
-
-  </section>
-
-  <section id = "videoList" style="display:none;">
-
-  </section>
+</section>
 
 
-  <section id = "mediaPlayer" style="display:none;">
-    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
+
+    <section id = "videoList" style="display:none;">
+      <div id="videoless-carousel" class="carousel slide" data-ride="carousel"id="swiper"data-interval="false">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <img class="first-video" src="bootstrap_bg.jpg" alt="First slide">
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>Video Selector</h1>
+                <p>View your videos here</p>
+                <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <img class="second-video" src="bootstrap_bg.jpg" alt="Second slide">
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>Video Selector</h1>
+                <p>Note:This section can also have critical ratings/genres.</p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <img class="third-video" src="bootstrap_bg.jpg" alt="Second slide">
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>Video Selector</h1>
+                <p>Note:This section can also have critical ratings/genres.</p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <img class="fourth-video" src="bootstrap_bg.jpg" alt="Second slide">
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>Back to back.</h1>
+                <p>Note:This section can also have critical ratings/genres.</p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <img class="fifth-video" src="bootstrap_bg.jpg" alt="Second slide">
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>One last Ride.</h1>
+                <p>Note:This section can also have critical ratings/genres.</p>
+              </div>
+            </div>
+          </div>
+    </section>
+
+
+
+
+
+  <section id = "mediaPlayer" style="display:none; position: absolute; margin-top: -300px;">
+    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1900" height="1600" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
         <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
           <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg">

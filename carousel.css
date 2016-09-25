@@ -41,6 +41,11 @@ body {
   position: absolute;
   left: 530px;
 }
+.example_video_1
+{
+  width: 1600px;
+  height: 1400px;
+}
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
