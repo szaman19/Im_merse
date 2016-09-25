@@ -50,6 +50,10 @@ Leap.loop(controllerOptions, function(frame) {
           if(state === "tsection"){
               console.log("User Swiped Right on tutorial");
               $('#myCarousel').carousel("next");
+              pauseTracker();
+          }else if(state ==="mlist"){
+            $('#videoless-carousel').carousel("next");
+            pauseTracker();
           }
 
           paused = true;
@@ -87,6 +91,9 @@ Leap.loop(controllerOptions, function(frame) {
                 $('#myCarousel').carousel("prev");
 
                 pauseTracker();
+            }else if (state ==="mlist") {
+              $('#videoless-carousel').carousel("prev");
+              pauseTracker();
             }
 
             // pauseTracker();
@@ -102,13 +109,67 @@ Leap.loop(controllerOptions, function(frame) {
 
   //Screen Tap Fuction
 
-  function screenTap(state){
+  // function screenTap(state){
+  //   if(frame.gestures.length > 0){
+  //     var tap = false;
+  //     for(var i = 0; i < frame.gestures.length; i++){
+  //       var gesture = frame.gestures[i];
+  //       var translation = frame.translation(previousFrame);
+  //       if(gesture.type ==="screenTap" && Math.abs(translation[0]) < 3){
+  //         console.log(Math.abs(translation[0]));
+  //         tap = true;
+  //       }
+  //     }
+  //
+  //     paused = tap;
+  //
+  //     if(tap){
+  //       console.log("User tapped");
+  //
+  //       console.log(vectorToString(translation));
+  //
+  //       if(state === "tsection"){
+  //         $('#tutorial').fadeOut("slow");
+  //         $('#videoList').fadeIn("slow");
+  //
+  //         tutorialSection = false;
+  //         movieList = true;
+  //
+  //         pauseTracker();
+  //
+  //       }else if (state ==="mlist") {
+  //         $('#videoList').fadeOut("slow");
+  //         $('#mediaPlayer').fadeIn("slow");
+  //         movieList = false;
+  //         movieMode = true;
+  //
+  //         pauseTracker();
+  //       }else{
+  //
+  // // EXAMPLE: Start playing the video
+  //       videoPlayer.play();
+  //       pauseTracker();
+  //
+  //
+  //       // });
+  //       }
+  //     }
+  //     return tap;
+  //   }else{
+  //     return false;
+  //   }
+  //
+  // }
+
+  //Screen Tap Fuction
+
+  function keyTap(state){
     if(frame.gestures.length > 0){
       var tap = false;
       for(var i = 0; i < frame.gestures.length; i++){
         var gesture = frame.gestures[i];
         var translation = frame.translation(previousFrame);
-        if(gesture.type ==="screenTap" && Math.abs(translation[0]) < 3){
+        if(gesture.type ==="keyTap" && Math.abs(translation[0]) < 3){
           console.log(Math.abs(translation[0]));
           tap = true;
         }
@@ -140,7 +201,16 @@ Leap.loop(controllerOptions, function(frame) {
         }else{
 
   // EXAMPLE: Start playing the video
-        videoPlayer.play();
+        $('#mediaPlayer').fadeOut("slow");
+        $('#videoList').fadeIn("slow");
+        // videoPlayer.play();
+        movieList = true;
+        movieMode = false;
+        var isPaused = videoPlayer.paused();
+        if(!isPaused){
+          videoPlayer.pause();
+          pauseTracker();
+        }
         pauseTracker();
 
 
@@ -280,17 +350,20 @@ function closedPinch(state){
   if(tutorialSection){
     swipeRight("tsection");
     swipeLeft("tsection");
-    screenTap("tsection");
+    // screenTap("tsection");
+    keyTap("tsection");
   }else if (movieList) {
     swipeRight("mlist");
     swipeLeft("mlist");
 
-    screenTap("mlist");
+    // screenTap("mlist");
+    keyTap("mlist");
   } else if (movieMode) {
 
     swipeRight('player');
     swipeLeft('player');
-    screenTap('player');
+    // screenTap('player');
+    keyTap("player");
     openPalm('player');
     closedPalm('player');
     clockwiseGesture('player');

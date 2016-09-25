@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" user-scalable="no">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
@@ -132,7 +132,60 @@
   </section>
 
   <section id = "videoList" style="display:none;">
-
+    <div id="videoless-carousel" class="carousel slide" data-ride="carousel"id="swiper"data-interval="false">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img class="first-video" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Does this work?.</h1>
+              <p>Note: Brief movie description.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="second-video" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Again.</h1>
+              <p>Note:This section can also have critical ratings/genres.</p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="third-video" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>TITLE OF MOVIE.</h1>
+              <p>Note:This section can also have critical ratings/genres.</p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="fourth-video" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Back to back.</h1>
+              <p>Note:This section can also have critical ratings/genres.</p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="fifth-video" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>One last Ride.</h1>
+              <p>Note:This section can also have critical ratings/genres.</p>
+            </div>
+          </div>
+        </div>
   </section>
 
 
@@ -146,7 +199,7 @@
      <source src="http://video-js.zencoder.com/oceans-clip.mp4" width="1024" height="552" type="video/mp4" />
 =======
   <section id = "mediaPlayer" style="display:none;">
-    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
+    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="800" height="580" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
         <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
           <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg">
