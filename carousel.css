@@ -3,8 +3,8 @@
 /* Padding below the footer and lighter body text */
 
 body {
-  padding-bottom: 40px;
-  color: #5a5a5a;
+  padding-bottom: 0px;
+  color: #D3D3D3;
 }
 
 
@@ -39,8 +39,9 @@ body {
 
 /* Carousel base class */
 .carousel {
-  height: 500px;
-  margin-bottom: 60px;
+  height: 1000px;
+  margin-bottom: 0px;
+  color: #D3D3D3;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
@@ -49,15 +50,15 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 500px;
-  background-color: #777;
+  height: 1000px;
+  background-color: #D3D3D3;
 }
 .carousel-inner > .item > img {
   position: absolute;
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 500px;
+  height: 1000px;
 }
 
 
@@ -65,6 +66,7 @@ body {
 -------------------------------------------------- */
 
 /* Center align the text within the three columns below the carousel */
+/*
 .marketing .col-lg-4 {
   margin-bottom: 20px;
   text-align: center;
@@ -76,7 +78,7 @@ body {
   margin-right: 10px;
   margin-left: 10px;
 }
-
+*/
 
 /* Featurettes
 ------------------------- */
